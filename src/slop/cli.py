@@ -496,8 +496,12 @@ def bench(
         Path, typer.Argument(exists=True, file_okay=False, help="Directory of images.")
     ] = Path("examples/originals"),
     backends: Annotated[
-        str, typer.Option(help="Comma-separated decoders, e.g. openai,gemini.")
-    ] = "openai,gemini",
+        str,
+        typer.Option(
+            help="Comma-separated decoders, e.g. openai,gemini. 'auto' = the first with a key "
+            "(keeps the default run cheap)."
+        ),
+    ] = "auto",
     vision: Vision = "auto",
     judge: Annotated[
         str, typer.Option(help="Vision provider for the Vibe Score (or 'none').")
@@ -536,7 +540,7 @@ def bench(
     with errors():
         plan = bench_run.Plan.build(
             originals=originals,
-            backends=[b for b in backends.split(",") if b],
+            backends=bench_run.resolve_backends(backends),
             languages=[lang for lang in languages.split(",") if lang],
             vision=vision,
             judge=judge,

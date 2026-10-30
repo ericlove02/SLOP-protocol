@@ -56,8 +56,8 @@ dev = [
 slop = "slop.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/ericlove02/slop-protocol"
-Specification = "https://github.com/ericlove02/slop-protocol/blob/main/SPEC.md"
+Homepage = "https://github.com/ericlove02/SLOP-protocol"
+Specification = "https://github.com/ericlove02/SLOP-protocol/blob/main/SPEC.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/slop"]

@@ -69,6 +69,18 @@ def _resolve_vision_name(name: str) -> str:
     )
 
 
+def resolve_backends(spec: str) -> list[str]:
+    """'openai,gemini' -> list; 'auto' -> the first image backend with a key."""
+    config.load_env()
+    names = [b.strip() for b in spec.split(",") if b.strip()]
+    if names != ["auto"]:
+        return names
+    for candidate in config.IMAGEGEN_AUTO_ORDER:
+        if has_key(candidate):
+            return [candidate]
+    return list(config.IMAGEGEN_AUTO_ORDER[:2])  # Plan.build reports them as skipped
+
+
 def _parse_budget(value: str) -> int | None:
     value = value.strip().lower()
     if value in ("none", "full", ""):

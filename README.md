@@ -6,7 +6,7 @@
 It's a picture of a thing. Probably.</p>
 
 <p align="center">
-  <a href="https://github.com/ericlove02/slop-protocol/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/ericlove02/slop-protocol/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/ericlove02/SLOP-protocol/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/ericlove02/SLOP-protocol/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="fidelity: vibes" src="https://img.shields.io/badge/fidelity-vibes-ff69b4">
   <img alt="compression: yes" src="https://img.shields.io/badge/compression-yes-brightgreen">
   <img alt="pixels transmitted: 0" src="https://img.shields.io/badge/pixels%20transmitted-0-blue">
@@ -76,8 +76,8 @@ uses a real image model (OpenAI or Google Gemini; Stability, Replicate and local
 ## Quickstart
 
 ```bash
-git clone https://github.com/ericlove02/slop-protocol.git
-cd slop-protocol
+git clone https://github.com/ericlove02/SLOP-protocol.git
+cd SLOP-protocol
 pip install -e ".[all]"
 ```
 
