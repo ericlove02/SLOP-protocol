@@ -24,9 +24,9 @@ class LocalDiffusersImageGen:
         self._torch = require("torch", "local")
         diffusers = require("diffusers", "local")
         device = "cuda" if self._torch.cuda.is_available() else "cpu"
-        if device == "cpu" and getattr(self._torch.backends, "mps", None):
-            if self._torch.backends.mps.is_available():
-                device = "mps"
+        mps = getattr(self._torch.backends, "mps", None)
+        if device == "cpu" and mps is not None and mps.is_available():
+            device = "mps"
         dtype = self._torch.float16 if device == "cuda" else self._torch.float32
         self._device = device
         self._pipe = diffusers.AutoPipelineForText2Image.from_pretrained(
