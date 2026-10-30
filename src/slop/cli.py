@@ -10,6 +10,7 @@ from typing import Annotated
 
 import typer
 from rich.console import Console
+from rich.markup import escape
 from rich.panel import Panel
 from rich.table import Table
 
@@ -35,7 +36,7 @@ def errors() -> Iterator[None]:
     try:
         yield
     except (ProviderError, PacketError, BudgetError, ConnectionError, FileNotFoundError) as exc:
-        err.print(f"[bold red]slop:[/] {exc}")
+        err.print(f"[bold red]slop:[/] {escape(str(exc))}")
         raise typer.Exit(1) from exc
 
 
@@ -470,7 +471,7 @@ def telephone(
         def report(r: tel.Round) -> None:
             err.print(
                 f"gen {r.index:2d}: {len(r.encoded.packet.to_bytes()):5d} B  "
-                f"[dim]{r.description[:90].replace(chr(10), ' ')}...[/]"
+                f"[dim]{escape(r.description[:90].replace(chr(10), ' '))}...[/]"
             )
 
         history = tel.play(

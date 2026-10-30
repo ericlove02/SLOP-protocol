@@ -17,6 +17,7 @@ from typing import Any
 
 from PIL import Image
 from rich.console import Console
+from rich.markup import escape
 
 from slop import __version__, config
 from slop.bench import metrics
@@ -315,7 +316,7 @@ class Runner:
                 "image": image_path.name,
                 "encode": {"error": f"{type(exc).__name__}: {exc}"},
             }
-            self.console.print(f"  [red]encode failed:[/] {exc}")
+            self.console.print(f"  [red]encode failed:[/] {escape(str(exc))}")
             self.save()
             return None
         packet = result.packet
@@ -363,7 +364,7 @@ class Runner:
             result = decode_detailed(packet, backend=gen)
         except Exception as exc:
             decodes[backend] = {"error": f"{type(exc).__name__}: {exc}"}
-            self.console.print(f"    [red]{backend} failed:[/] {exc}")
+            self.console.print(f"    [red]{backend} failed:[/] {escape(str(exc))}")
             self.save()
             return
         result.save(out_path)
@@ -448,7 +449,7 @@ class Runner:
                     enc = encode_detailed(current, vision=self.vision)
                     dec = decode_detailed(enc.packet, backend=gen)
                 except Exception as exc:
-                    self.console.print(f"  [red]round {index} failed:[/] {exc}")
+                    self.console.print(f"  [red]round {index} failed:[/] {escape(str(exc))}")
                     game["error"] = f"round {index}: {type(exc).__name__}: {exc}"
                     self.save()
                     break

@@ -142,3 +142,16 @@ def test_doctor_lists_providers():
 def test_send_requires_one_destination(sample_image):
     result = runner.invoke(app, ["send", str(sample_image)])
     assert result.exit_code != 0
+
+
+def test_errors_keep_square_brackets(monkeypatch, sample_image):
+    from slop import providers
+    from slop.providers.base import MissingDependencyError
+
+    def missing(**_):
+        raise MissingDependencyError("pip install 'slop-protocol[anthropic]'")
+
+    monkeypatch.setitem(providers.VISION, "anthropic", missing)
+    result = runner.invoke(app, ["encode", str(sample_image), "--vision", "anthropic"])
+    assert result.exit_code == 1
+    assert "slop-protocol[anthropic]" in result.output
