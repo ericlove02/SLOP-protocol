@@ -75,8 +75,10 @@ class FakeJudge(FakeVision):
 
 
 @pytest.fixture(autouse=True)
-def no_real_keys(monkeypatch):
-    """Make sure no test can accidentally reach a paid API."""
+def no_real_keys(monkeypatch, request):
+    """Make sure no test can accidentally reach a paid API (unless marked live)."""
+    if request.node.get_closest_marker("live"):
+        return
     for name in (
         "ANTHROPIC_API_KEY",
         "OPENAI_API_KEY",
