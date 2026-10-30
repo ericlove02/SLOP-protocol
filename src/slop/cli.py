@@ -554,6 +554,22 @@ def bench(
 
 
 @app.command()
+def report(
+    results: Annotated[Path, typer.Argument(help="Benchmark results JSON.")] = Path(
+        "benchmarks/results/results.json"
+    ),
+    readme: Annotated[Path, typer.Option(help="README to update between slop markers.")] = Path(
+        "README.md"
+    ),
+) -> None:
+    """Regenerate tables, grids and README sections from benchmark JSON. Free."""
+    from slop.bench import report as report_mod
+
+    for path in report_mod.build(results, readme=readme):
+        err.print(f"[green]wrote[/] {path}")
+
+
+@app.command()
 def doctor() -> None:
     """Show which providers are usable (key names only; values are never printed)."""
     config.load_env()
